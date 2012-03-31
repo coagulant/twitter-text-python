@@ -24,7 +24,8 @@ import urllib
 # Some of this code has been translated from the twitter-text-java library:
 # <http://github.com/mzsanford/twitter-text-java>
 AT_SIGNS = ur'[@\uff20]'
-UTF_CHARS = ur'a-z0-9_\u00c0-\u00d6\u00d8-\u00f6\u00f8-\u00ff'
+UTF_CHARS = ur'a-z0-9_\u00c0-\u00d6\u00d8-\u00f6\u00f8-\u00ff\u0400-\u04ff'
+UTF_CHARS_NON_DIGIT = ur'a-z_\u00c0-\u00d6\u00d8-\u00f6\u00f8-\u00ff\u0400-\u04ff'
 SPACES = ur'[\u0020\u00A0\u1680\u180E\u2002-\u202F\u205F\u2060\u3000]'
 
 # Lists
@@ -39,7 +40,7 @@ REPLY_REGEX = re.compile(ur'^(?:' + SPACES + ur')*' + AT_SIGNS \
               + ur'([a-z0-9_]{1,20}).*', re.IGNORECASE)
 
 # Hashtags
-HASHTAG_EXP = ur'(^|[^0-9A-Z&/]+)(#|\uff03)([0-9A-Z_]*[A-Z_]+[%s]*)' % UTF_CHARS
+HASHTAG_EXP = ur'(^|[^0-9A-Z&/]+)(#|\uff03)([%(uc)s]*[%(ucnd)s]+[%(uc)s]*)' % {'uc': UTF_CHARS, 'ucnd': UTF_CHARS_NON_DIGIT}
 HASHTAG_REGEX = re.compile(HASHTAG_EXP, re.IGNORECASE)
 
 

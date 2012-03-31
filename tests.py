@@ -410,6 +410,11 @@ class TWPTests(unittest.TestCase):
         result = self.parser.parse(u'text #hash_tag')
         self.assertEqual(result.html, u'text <a href="http://search.twitter.com/search?q=%23hash_tag">#hash_tag</a>')
         self.assertEqual(result.tags, [u'hash_tag'])
+
+    def test_hashtag_cyrillic(self):
+        result = self.parser.parse(u'text #хэштег')
+        self.assertEqual(result.html, u'text <a href="http://search.twitter.com/search?q=%23%D1%85%D1%8D%D1%88%D1%82%D0%B5%D0%B3">#хэштег</a>')
+        self.assertEqual(result.tags, [u'хэштег'])
     
     
     # Username tests -----------------------------------------------------------
